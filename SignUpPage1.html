@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutor Sign Up</title>
+    <link rel="stylesheet" href="css/signuppage1.css" />
+    <style>
+      /* Additional styles for the subjects section */
+      #subjects-container {
+        margin-top: 10px;
+      }
+
+      #subjects-container label {
+        display: block;
+        margin: 5px 0;
+      }
+
+      #subjects-container input[type="checkbox"] {
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <label for="year">Year</label>
+        <input type="number" id="year" required />
+
+        <label class="form-label">College</label>
+        <select id="college" required>
+          <option value="">Select College</option>
+          <option value="College Of Science">College Of Science</option>
+          <option value="College of Builds And Art">College of Builds And Art</option>
+          <option value="College Of Health and Applied Science"
+            >College Of Health and Applied Science</option
+          >
+          <option value="College of Humanities">College of Humanities</option>
+          <option value="College of Agriculture">College of Agriculture</option>
+        </select>
+
+        <label class="form-label">Programmes</label>
+        <select id="programmes" required>
+          <option value="">Select Programme</option>
+        </select>
+
+        <div id="subjects-container">
+          <label>Subjects (Select up to 4)</label>
+          <!-- Subjects will be dynamically loaded here -->
+        </div>
+
+        <label for="hostel">Hostel</label>
+        <input type="text" id="hostel" required />
+
+        <label class="form-label">Preferred Session</label>
+        <select id="Preferred-session">
+          <option value="">1 hour</option>
+          <option value="">2 hour</option>
+          <option value="">3 hour</option>
+          <option value="">4 hour</option>
+          <option value="">5 hour</option>
+          <option value="">6 hour</option>
+        </select>
+
+        <button class="btn-name" onclick="window.location.href='dashboard.html'">Sign Up</button>
+      </form>
+
+      <div class="side-box">
+        <div class="side-box1">
+          <label for="Days">Days</label><br />
+          <div id="days-container"></div>
+        </div>
+        <!-- Add an image for testing -->
+        <img src="https://via.placeholder.com/300" alt="Placeholder Image" />
+      </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="js/signup.js"></script>
+  </body>
+</html>

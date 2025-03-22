@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-section">
+        <form>
+          <h1>
+            Create Account 
+          </h1>
+          <label for="name">Name</label>
+          <input type="text" id="name" required placeholder="Enter your name" />
+          
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="emial"
+            required
+            placeholder="example@gmail.com"
+          />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            required
+            placeholder="Enter at least 8+ characters"
+          />
+          
+
+          <label for="confirm-password"> Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            required
+            placeholder="Confirm your password"
+          />
+
+          <button class="btn-name"><a href="homepage2.html">Sign Up</a></button>
+
+          <p class="bottom-text">
+            Already have an account?<a href="usr-signin.html" class="transition-link"
+              >Sign In</a
+            >
+          </p>
+        </form>
+      </div>
+      <div class="image-container">
+        <div class="image-section">
+          <img src="assets/Untitled.png" alt="sign-up-image" />
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('emial'); // Note: Typo in HTML (emial vs email)
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+    
+        // Load existing users from localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+    
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearErrors();
+    
+            if (validateForm()) {
+                signUp();
+            }
+        });
+    
+        function validateForm() {
+            let isValid = true;
+    
+            // Name validation
+            if (nameInput.value.trim().length < 2) {
+                showError(nameInput, 'Name must be at least 2 characters');
+                isValid = false;
+            }
+    
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                showError(emailInput, 'Invalid email address');
+                isValid = false;
+            }
+    
+            // Password validation
+            if (passwordInput.value.length < 8) {
+                showError(passwordInput, 'Password must be at least 8 characters');
+                isValid = false;
+            }
+    
+            // Confirm password validation
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                showError(confirmPasswordInput, 'Passwords do not match');
+                isValid = false;
+            }
+    
+            // Check if email already exists
+            if (users.some(user => user.email === emailInput.value)) {
+                showError(emailInput, 'Email already registered');
+                isValid = false;
+            }
+    
+            return isValid;
+        }
+    
+        function signUp() {
+            const user = {
+                id: Date.now(),
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                password: hashPassword(passwordInput.value) // Never store plain text passwords
+            };
+    
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Redirect to home page after successful signup
+            window.location.href = 'homepage2.html';
+        }
+    
+        function hashPassword(password) {
+            // Simple hashing example (use proper hashing in production)
+            return btoa(password); // Note: This is not secure, use proper hashing in real apps
+        }
+    
+        function showError(input, message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.color = 'red';
+            errorDiv.textContent = message;
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+        }
+    
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(error => error.remove());
+        }
+    });
+    </script>
+</html>

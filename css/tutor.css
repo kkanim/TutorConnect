@@ -1,0 +1,100 @@
+:root {
+    --primary-500: #A15541;
+    --neutral-600: #565D6D;
+    --neutral-500: #9095A1;
+    --neutral-200: #e9ecef;
+}
+/* Slider Styling */
+.form-range {
+    width: 100%;
+    height: 8px;
+    background: var(--neutral-200);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.form-range:hover {
+    opacity: 1;
+}
+
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-500);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.form-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-500);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Slider Labels */
+.d-flex.justify-content-between {
+    font-size: 0.875rem;
+    color: var(--neutral-500);
+}
+
+#sliderValue {
+    font-weight: 600;
+    color: var(--primary-500);
+}
+
+/* Rating Stars Styling */
+.rating-stars {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    color: #dee2e6; /* Default star color */
+}
+
+.rating-stars .star {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-stars .star.active,
+.rating-stars .star:hover {
+    color: #ffc107; /* Active/hover star color */
+}
+
+/* Tutor Card Hover Effect */
+.tutor-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--neutral-200);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+.tutor-card:hover {
+    transform: translateY(-5px); /* Slightly lift the card */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a shadow */
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+    .navbar-toggler {
+        display: block; /* Show hamburger menu on mobile */
+    }
+
+    .header-menu {
+        display: none; /* Hide desktop menu on mobile */
+    }
+
+    .header-logo {
+        margin-right: auto; /* Push logo to the left */
+    }
+
+    .header-icons {
+        margin-left: auto; /* Push icons to the right */
+    }
+}

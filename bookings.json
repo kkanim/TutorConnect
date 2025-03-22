@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "tutor": "John Doe",
+        "location": "Room A",
+        "startTime": "2024-03-25T10:00",
+        "endTime": "2024-03-25T11:00"
+    },
+    {
+        "id": 2,
+        "tutor": "Jane Smith",
+        "location": "Room B",
+        "startTime": "2024-03-26T14:00",
+        "endTime": "2024-03-26T15:30"
+    }
+]
