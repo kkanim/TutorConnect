@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-from django.shortcuts import redirect
-=======
 from django.shortcuts import redirect, render
->>>>>>> 36d33f2 (Updated models.py: Added rating validation and improved average rating calculation)
 from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -10,17 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import SignUpSerializer, LogInSerializer, UpdateDetailsSerializer
 from django.contrib.auth import logout, login
-<<<<<<< HEAD
-
-
-
-=======
 from .models import Tutor
 from .forms import TutorForm, ReviewForm
 
 
- 
->>>>>>> 36d33f2 (Updated models.py: Added rating validation and improved average rating calculation)
+
 @api_view(["POST", "GET"])
 def signup_user(request):
     if request.method == "GET":
@@ -53,9 +43,8 @@ def login_user(request):
     except Exception as e:
         print("Error in login: ", str(e))
         return Response({'message': 'An error occured... try again', 'success': False }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-<<<<<<< HEAD
-=======
-    
+
+
 # List tutors with filtering options
 def tutor_list(request):
     subject = request.GET.get('subject')
@@ -97,9 +86,6 @@ def add_review(request):
     
     return render(request, 'add_review.html', {'form': form})
     
-
->>>>>>> 36d33f2 (Updated models.py: Added rating validation and improved average rating calculation)
-
 
 @permission_classes([IsAuthenticated])
 @api_view(["PUT"])

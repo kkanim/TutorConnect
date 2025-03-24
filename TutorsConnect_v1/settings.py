@@ -42,11 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AuthMiddleWare',
     'Account',
-<<<<<<< HEAD
-=======
-    'rest_framework',
->>>>>>> 36d33f2 (Updated models.py: Added rating validation and improved average rating calculation)
-]
+
 
 # 'django.middleware.csrf.CsrfViewMiddleware',
 MIDDLEWARE = [
