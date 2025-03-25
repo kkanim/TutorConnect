@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Tutor/Student Account</title>
+    <meta name="description" content="Create a new tutor or student account">
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        /* Enhanced role selection styling */
+        .role-selection {
+            margin: 1rem 0;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        
+        .role-options {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .role-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .role-option input[type="radio"] {
+            accent-color: #4CAF50; /* Green color for checked state */
+        }
+        
+        /* Password validation message */
+        .password-hint {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Error message styling */
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Form Section -->
+        <div class="form-section">
+            <form id="signupForm" novalidate>
+                <h1>Create Account</h1>
+              
+                <!-- Form Fields -->
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="Enter your full name" />
+                    <div id="name-error" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="example@gmail.com" />
+                    <div id="email-error" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="0123456789" pattern="[0-9]{10,15}" />
+                    <div id="phone-error" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required 
+                           placeholder="Enter at least 8+ characters" 
+                           minlength="8" />
+                    <p class="password-hint">Use 8 or more characters with a mix of letters, numbers &amp; symbols</p>
+                    <div id="password-error" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required 
+                           placeholder="Confirm your password" />
+                    <div id="confirm-password-error" class="error-message"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select Your Role</label>
+                    <div class="role-selection">
+                        <div class="role-options">
+                            <label class="role-option">
+                                <input type="radio" id="tutor" name="role" value="tutor" required> 
+                                Tutor
+                            </label>
+                            <label class="role-option">
+                                <input type="radio" id="student" name="role" value="student" required>
+                                Student
+                            </label>
+                        </div>
+                        <div id="role-error" class="error-message"></div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-name">Create Account</button>
+
+                <p class="bottom-text">
+                    Already have an account? <a href="sign.html" class="transition-link">Sign In</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Image Section -->
+        <div class="image-container">
+            <div class="image-section">
+                <img src="assets/Untitled.png" alt="Education illustration showing tutor and student interaction" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+            
+            // Get form values
+            const form = e.target;
+            const role = form.querySelector('input[name="role"]:checked')?.value;
+            const name = form.querySelector('#name').value.trim();
+            const email = form.querySelector('#email').value.trim();
+            const phone = form.querySelector('#phone').value.trim();
+            const password = form.querySelector('#password').value;
+            const confirmPassword = form.querySelector('#confirm-password').value;
+            
+            // Validation flags
+            let isValid = true;
+            
+            // Validate role
+            if (!role) {
+                showError('role-error', 'Please select your role');
+                isValid = false;
+            }
+            
+            // Validate name
+            if (!name) {
+                showError('name-error', 'Full name is required');
+                isValid = false;
+            }
+            
+            // Validate email
+            if (!email) {
+                showError('email-error', 'Email is required');
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('email-error', 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate phone
+            if (!phone) {
+                showError('phone-error', 'Phone number is required');
+                isValid = false;
+            } else if (!/^[0-9]{10,15}$/.test(phone)) {
+                showError('phone-error', 'Please enter a valid phone number (10-15 digits)');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password) {
+                showError('password-error', 'Password is required');
+                isValid = false;
+            } else if (password.length < 8) {
+                showError('password-error', 'Password must be at least 8 characters');
+                isValid = false;
+            }
+            
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                showError('confirm-password-error', 'Passwords do not match');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Prepare user data
+            const userData = {
+                role,
+                name,
+                email,
+                phone,
+                password // Note: In production, never store raw passwords. Hash them first.
+            };
+            
+            // Store in localStorage (for demo only - use server-side storage in production)
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            // Redirect based on role
+            window.location.href = role === 'tutor' 
+                ? 'SignUpPage1.html' 
+                : 'homepage2.html';
+        });
+        
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+        
+        // Add real-time validation for better UX
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                const errorElement = document.getElementById(`${input.id}-error`);
+                if (errorElement) {
+                    errorElement.textContent = '';
+                    errorElement.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

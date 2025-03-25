@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorConnect - Peer-to-Peer Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #A15541;
+            --secondary-color: #b84d2b;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                        url('assets/hero-bg.jpg') center/cover;
+            padding: 120px 0 80px;
+        }
+
+        .cta-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .stats-badge {
+            background: rgba(161,85,65,0.1);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .nav-pill {
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill:hover {
+            background: rgba(161,85,65,0.1);
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header-container sticky-top bg-white">
+    <div class="container">
+        <nav class="d-flex justify-content-between align-items-center py-3">
+            <a href="/" class="header-logo">
+                <img src="assets/Untitled.png" alt="TutorConnect" width="140">
+            </a>
+            <div class="d-none d-md-flex gap-4 align-items-center">
+                <div class="header-buttons">
+                    <button class="btn cta-btn" onclick="window.location.href='SignupPage.html'">Get Started</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4" style="color: var(--text-dark);">
+                    Transform Your Learning Experience
+                </h1>
+                <p class="lead mb-5" style="color: var(--text-light);">
+                    Connect with peer tutors, master challenging subjects, and build academic confidence in our collaborative learning community
+                </p>
+                <button class="btn cta-btn btn-lg mb-4">
+                    Start Learning Now <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+                <div class="d-flex gap-3 justify-content-center">
+                    <div class="stats-badge">
+                        <i class="fas fa-users me-2"></i>5,000+ Active Learners
+                    </div>
+                    <div class="stats-badge">
+                        <i class="fas fa-star me-2"></i>4.9/5 Satisfaction
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Features -->
+<section class="py-5" id="features">
+    <div class="container">
+        <h2 class="section-title text-center">Why Choose TutorConnect?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <div class="icon-wrapper mb-4" style="font-size: 2.5rem; color: var(--primary-color);">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4 class="mb-3">Peer-to-Peer Matching</h4>
+                    <p>Connect with students who've excelled in the courses you're taking</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <div class="icon-wrapper mb-4" style="font-size: 2.5rem; color: var(--primary-color);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="mb-3">Flexible Scheduling</h4>
+                    <p>Book sessions at your convenience, 24/7 availability</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 text-center">
+                    <div class="icon-wrapper mb-4" style="font-size: 2.5rem; color: var(--primary-color);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="mb-3">Proven Results</h4>
+                    <p>Students improve grades by 1.5+ on average</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-light" id="stats">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <h2 class="display-4 fw-bold" style="color: var(--primary-color);">95%</h2>
+                <p class="text-muted">Pass Rate</p>
+            </div>
+            <div class="col-md-3">
+                <h2 class="display-4 fw-bold" style="color: var(--primary-color);">10k+</h2>
+                <p class="text-muted">Completed Sessions</p>
+            </div>
+            <div class="col-md-3">
+                <h2 class="display-4 fw-bold" style="color: var(--primary-color);">50+</h2>
+                <p class="text-muted">Courses Offered</p>
+            </div>
+            <div class="col-md-3">
+                <h2 class="display-4 fw-bold" style="color: var(--primary-color);">4.9★</h2>
+                <p class="text-muted">Average Rating</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5" id="testimonials">
+    <div class="container">
+        <h2 class="section-title text-center">Success Stories</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="assets/user1.jpg" class="rounded-circle me-3" width="60" alt="User">
+                        <div>
+                            <h5 class="mb-0">Sarah Johnson</h5>
+                            <small>Computer Science Student</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"TutorConnect helped me conquer algorithms and data structures. My grades improved from C to A in just 6 weeks!"</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="assets/user2.jpg" class="rounded-circle me-3" width="60" alt="User">
+                        <div>
+                            <h5 class="mb-0">Michael Chen</h5>
+                            <small>Engineering Student</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"The peer tutors explain complex concepts in ways that just click. It's like learning from a friend who really gets it."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-5 bg-dark text-center text-white">
+    <div class="container">
+        <h2 class="mb-4">Ready to Transform Your Learning?</h2>
+        <p class="mb-4 lead">Join thousands of successful students today</p>
+        <button class="btn cta-btn btn-lg">
+            Get Started Now <i class="fas fa-arrow-right ms-2"></i>
+        </button>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 bg-light">
+    <div class="container text-center">
+        <img src="assets/Untitled.png" alt="TutorConnect" width="120" class="mb-3">
+        <p class="text-muted mb-0">&copy; 2025 TutorConnect. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

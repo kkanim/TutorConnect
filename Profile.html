@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorConnect - My Profile</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #A15541;
+            --neutral-dark: #565D6D;
+            --neutral-light: #9095A1;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-logo img {
+            width: 120px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .navbar-toggler {
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            color: var(--neutral-dark);
+            padding: 0.5rem;
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-menu-item {
+            color: var(--neutral-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+
+        .header-menu-item:hover {
+            color: var(--primary-color);
+        }
+
+        .header-menu-item.selected {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-bottom-color: var(--primary-color);
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .profile-icon:hover img {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .profile-container {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            position: relative;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), #c47a6a);
+        }
+
+        /* Updated avatar container positioning */
+        .avatar-container {
+            position: absolute;
+            bottom: -30px;
+            left: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background-color: #ddd;
+            overflow: hidden;
+        }
+
+        .avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            padding-bottom: 1rem;
+        }
+
+        .profile-body {
+            padding: 4rem 2rem 2rem;
+        }
+
+        .profile-name {
+            margin-bottom: 0.5rem;
+            color: var(--neutral-dark);
+            font-size: 1.75rem;
+        }
+
+        .profile-title {
+            color: var(--neutral-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .edit-profile-btn {
+            padding: 0.5rem 2rem;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: white;
+            border-radius: 2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .profile-details {
+            text-align: left;
+            padding: 0 1.5rem 2rem;
+        }
+
+        .detail-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .detail-value {
+            color: var(--neutral-light);
+        }
+
+        /* Edit Profile Modal */
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(161, 85, 65, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #8a4a38;
+            border-color: #8a4a38;
+        }
+
+        .avatar-upload {
+            position: relative;
+            width: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar-edit {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        .avatar-edit input {
+            display: none;
+        }
+
+        .avatar-edit label {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 34px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2d2d2d;
+            color: white;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .header-menu {
+                display: none;
+            }
+
+            .profile-container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+            .avatar-container {
+                flex-direction: column;
+                align-items: flex-start;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                bottom: -50px;
+            }
+
+            .profile-info {
+                text-align: center;
+                padding-top: 1rem;
+            }
+
+            .profile-body {
+                padding-top: 5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <img src="assets/Untitled.png" alt="TutorConnect">
+        </div>
+    
+        <!-- Hamburger Menu Button -->
+        <button class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    
+        <!-- Navigation Menu -->
+        <nav class="header-menu d-none d-md-flex">
+            <a href="homepage2.html" class="header-menu-item">Home</a>
+            <a href="program.html" class="header-menu-item">Programs</a>
+            <a href="tutor.html" class="header-menu-item">Tutors</a>
+            <a href="booking.html" class="header-menu-item">Bookings</a>
+        </nav>
+    
+        <!-- Profile Icon -->
+        <div>
+            <button class="logout-btn" onclick="window.location.href='sign.html'"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+        </div>
+    
+        <!-- Offcanvas Menu -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <nav class="header-menu d-flex flex-column">
+                    <a href="homepage2.html" class="header-menu-item">Home</a>
+                    <a href="program.html" class="header-menu-item">Programs</a>
+                    <a href="tutor.html" class="header-menu-item">Tutors</a>
+                    <a href="booking.html" class="header-menu-item">Bookings</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <div class="avatar-large">
+                        <img src="assets/profile.jpg" alt="Profile Picture" id="profileImage">
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="profile-name">John Doe</h2>
+                        <p class="profile-title">Mathematics Tutor</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-body">
+                <button class="edit-profile-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                    <i class="fas fa-edit me-2"></i>Edit Profile
+                </button>
+                
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value" id="displayName">John Doe</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Email Address</span>
+                        <span class="detail-value" id="displayEmail">john.doe@example.com</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Phone Number</span>
+                        <span class="detail-value" id="displayPhone">(123) 456-7890</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Specialization</span>
+                        <span class="detail-value" id="displaySpecialization">Mathematics, Computer Science</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Bio</span>
+                        <p class="detail-value" id="displayBio">Experienced tutor with 5+ years of teaching mathematics and computer science to high school and college students. Passionate about making complex concepts easy to understand.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="profileForm">
+                        <div class="avatar-upload">
+                            <div class="avatar-large">
+                                <img src="assets/profile.jpg" alt="Profile Picture" id="previewImage">
+                            </div>
+                            <div class="avatar-edit">
+                                <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                <label for="imageUpload"><i class="fas fa-camera"></i></label>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" value="John">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" value="Doe">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" value="john.doe@example.com">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" value="(123) 456-7890">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="specialization" class="form-label">Specialization</label>
+                            <input type="text" class="form-control" id="specialization" value="Mathematics, Computer Science">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" rows="4">Experienced tutor with 5+ years of teaching mathematics and computer science to high school and college students. Passionate about making complex concepts easy to understand.</textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="saveProfile">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>TutorConnect</h5>
+                    <p>Connecting students with expert tutors for personalized learning experiences.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2023 TutorConnect. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Image upload preview
+            const imageUpload = document.getElementById('imageUpload');
+            const previewImage = document.getElementById('previewImage');
+            const profileImage = document.getElementById('profileImage');
+            
+            imageUpload.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Save profile changes
+            document.getElementById('saveProfile').addEventListener('click', function() {
+                // Update profile display with form values
+                document.getElementById('displayName').textContent = 
+                    document.getElementById('firstName').value + ' ' + 
+                    document.getElementById('lastName').value;
+                
+                document.getElementById('displayEmail').textContent = 
+                    document.getElementById('email').value;
+                
+                document.getElementById('displayPhone').textContent = 
+                    document.getElementById('phone').value;
+                
+                document.getElementById('displaySpecialization').textContent = 
+                    document.getElementById('specialization').value;
+                
+                document.getElementById('displayBio').textContent = 
+                    document.getElementById('bio').value;
+                
+                // Update profile image if changed
+                if (imageUpload.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profileImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(imageUpload.files[0]);
+                }
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+                modal.hide();
+                
+                // Show success message
+                alert('Profile updated successfully!');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+/* Custom CSS for Header */
+:root {
+    --primary-500: #A15541;
+    --neutral-600: #565D6D;
+    --neutral-500: #9095A1;
+}
+
+/* Header Container */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.header-logo {
+    width: 120px; /* Adjust logo size */
+}
+
+.header-logo img {
+    width: 100%;
+    height: auto;
+}
+
+/* Hamburger Menu Button */
+.navbar-toggler {
+    border: none;
+    background: none;
+    font-size: 24px;
+    color: var(--neutral-600);
+    cursor: pointer;
+}
+
+/* Navigation Menu */
+.header-menu {
+    display: flex;
+    gap: 20px; /* Space between menu items */
+}
+
+.header-menu-item {
+    color: var(--neutral-600);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.header-menu-item:hover {
+    color: var(--primary-500);
+}
+
+/* Icons */
+.header-icons {
+    display: flex;
+    gap: 15px; /* Space between icons */
+}
+
+.header-icons i {
+    font-size: 20px;
+    color: var(--neutral-600);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.header-icons i:hover {
+    color: var(--primary-500);
+}
+
+/* Offcanvas Menu */
+.offcanvas {
+    background: #FFFFFF;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.offcanvas-body {
+    padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 767.98px) {
+    .header-menu, .header-icons {
+        display: none; /* Hide menu and icons on mobile */
+    }
+
+    .navbar-toggler {
+        display: block; /* Show hamburger button on mobile */
+    }
+
+    /* Offcanvas Menu Layout */
+    .offcanvas-body .header-menu {
+        flex-direction: column; /* Vertical layout for menu items */
+        gap: 10px; /* Space between vertical menu items */
+    }
+
+    .offcanvas-body .header-icons {
+        justify-content: flex-start; /* Align icons to the left */
+        margin-bottom: 20px; /* Space between icons and menu */
+    }
+}
+
+.category-tabs .nav-link {
+    color: #7a5943;
+    cursor: pointer;
+}
+
+.category-tabs .nav-link.active {
+    color: #8B3E2C;
+    font-weight: bold;
+    border-bottom: 2px solid #8B3E2C;
+}
+
+
+.btn-filter {
+    background-color: #8B3E2C;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: none;
+}
+
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--neutral-600);
+    margin-bottom: 8px;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: var(--neutral-500);
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    color: var(--neutral-500);
+    cursor: pointer;
+    padding: 15px 15px;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.like-btn.liked {
+    color: var(--primary-500);
+}
+
+.like-btn:hover {
+    transform: scale(1.1);
+}
+
+.like-btn:focus {
+    outline: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-500);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #8B3E2C;
+    color: white;
+}
+
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <style>    .error-message {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}
+
+input:invalid {
+    border-color: #dc3545;
+}
+
+input:valid {
+    border-color: #28a745;
+}
+</style>
+  <body>
+    <div class="container">
+      <!-- Form Section -->
+      <div class="form-section">
+        <form>
+          <h1>
+            Create <br />
+          
+          </h1>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            required
+            placeholder="example@gmail.com"
+          />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            required
+            placeholder="Enter at least 8+ characters"
+          />
+
+          <button class="btn-name" onclick="window.location.href='homepage2.html'">Sign In</button>
+        </form>
+      </div>
+
+      <!-- Image Section -->
+      <div class="image-container">
+        <div class="image-section">
+          <img src="assets/Untitled.png" alt="sign-up-image" />
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+    
+        // Load existing users from localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+    
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearErrors();
+    
+            if (validateForm()) {
+                signIn();
+            }
+        });
+    
+        function validateForm() {
+            let isValid = true;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+            // Email validation
+            if (!emailRegex.test(emailInput.value)) {
+                showError(emailInput, 'Invalid email address');
+                isValid = false;
+            }
+    
+            // Password validation
+            if (passwordInput.value.length < 8) {
+                showError(passwordInput, 'Password must be at least 8 characters');
+                isValid = false;
+            }
+    
+            return isValid;
+        }
+    
+        function signIn() {
+            const user = users.find(user => 
+                user.email === emailInput.value && 
+                user.password === passwordInput.value
+            );
+    
+            if (user) {
+                // Store current user session
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'homepage2.html';
+            } else {
+                showError(emailInput, 'Invalid email or password');
+                if (users.length === 0) {
+                    showError(emailInput, 'No users found. Please sign up first.');
+                }
+            }
+        }
+    
+        function showError(input, message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.color = 'red';
+            errorDiv.textContent = message;
+            input.parentNode.insertBefore(errorDiv, input.nextSibling);
+        }
+    
+        function clearErrors() {
+            const errors = document.querySelectorAll('.error-message');
+            errors.forEach(error => error.remove());
+        }
+    });
+    </script>
+
+
+</html>

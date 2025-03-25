@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | TutorConnect</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #8B4C39;
+            --secondary-color: #f8f9fa;
+            --accent-color: #03bd9e;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar Styling - Matching Calendar Page */
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-logo img {
+            max-width: 160px;
+            height: auto;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            padding: 0.75rem;
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            transition: margin-left 0.3s;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Cards styling */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .card-header span {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .card-header span:hover {
+            text-decoration: underline;
+        }
+
+        /* Chart container */
+        #sessionsChart {
+            width: 100% !important;
+            height: 200px !important;
+        }
+
+        /* Ratings styling */
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #f1c40f;
+            font-size: 1.2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        #progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 59%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Mobile Menu */
+        .mobile-header {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+
+            .main-content {
+                padding: 1.5rem;
+                margin-top: 70px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <button class="hamburger-btn">☰</button>
+        <div class="page-title">Dashboard</div>
+        <div class="profile-container">
+            <img src="assets/profile-pic.jpg" alt="Profile" class="profile-image" onclick="window.location.href='profile.html'">
+        </div>
+    </div>
+
+    <!-- Overlay for Mobile Menu -->
+    <div class="overlay"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation - Matching Calendar Page -->
+        <aside class="sidebar">
+            <div class="header-logo">
+                <img src="assets/Untitled.png" alt="TutorConnect">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html" class="nav-link active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="Schedule.html" class="nav-link"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                    <li><a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" onclick="window.location.href='sign.html'"><i class="fas fa-sign-out-alt"></i> Log Out</button>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Desktop Header -->
+            <div class="header">
+                <h1 class="page-title">Dashboard Overview</h1>
+            </div>
+            
+            <section class="cards-container">
+                <div class="card" id="sessions-card">
+                    <div class="card-header">
+                        <span>Sessions</span>
+                        <span onclick="window.location.href='sessions.html'">View details →</span>
+                    </div>
+                    <canvas id="sessionsChart"></canvas>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>Ratings</span>
+                        <span onclick="window.location.href='ratings.html'">View details →</span>
+                    </div>
+                    <div class="rating">
+                        <span id="rating-percentage">80%</span>
+                        <span class="stars">⭐⭐⭐⭐☆</span>
+                    </div>
+                    <h2 id="rating-score">4.0</h2>
+                    <div class="progress-bar">
+                        <div id="progress-bar-fill" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span>Earnings</span>
+                        <span onclick="window.location.href='earnings.html'">View details →</span>
+                    </div>
+                    <div class="rating">
+                        <span>This Month</span>
+                        <span class="stars">↑ 12%</span>
+                    </div>
+                    <h2>₵70.00</h2>
+                    <p class="small-text">Next payout: May 15</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Functionality
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+
+            hamburgerBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Close menu when clicking nav links on mobile
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 992) {
+                        sidebar.classList.remove('active');
+                        overlay.classList.remove('active');
+                    }
+                });
+            });
+
+            // Sessions Chart
+            const ctx = document.getElementById('sessionsChart').getContext('2d');
+            const sessionsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Completed Sessions',
+                        data: [12, 19, 15, 22, 18, 25],
+                        backgroundColor: 'rgba(139, 76, 57, 0.2)',
+                        borderColor: 'rgba(139, 76, 57, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Update rating display
+            function updateRating() {
+                const rating = 4.0;
+                const percentage = Math.round((rating / 5) * 100);
+                
+                document.getElementById('rating-percentage').textContent = `${percentage}%`;
+                document.getElementById('rating-score').textContent = rating.toFixed(1);
+                document.getElementById('progress-bar-fill').style.width = `${percentage}%`;
+                
+                // Update stars display
+                const starsContainer = document.querySelector('#ratings-card .stars');
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= fullStars) {
+                        starsHtml += '⭐';
+                    } else if (i === fullStars + 1 && hasHalfStar) {
+                        starsHtml += '½';
+                    } else {
+                        starsHtml += '☆';
+                    }
+                }
+                if (starsContainer) starsContainer.innerHTML = starsHtml;
+            }
+            
+            updateRating();
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                sessionsChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>

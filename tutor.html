@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TutorConnect - Tutors</title>
+    <link rel="stylesheet" href="css/tutor.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./js/footer.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {loadfooter(document);});
+    </script>
+    <style>
+        :root {
+            --primary-color: #A15541;
+            --primary-hover: #8a4a37;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-logo {
+            width: 120px;
+        }
+
+        .header-logo img {
+            width: 100%;
+            height: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+            background: none;
+            font-size: 24px;
+            color: #565D6D;
+            cursor: pointer;
+        }
+
+        .header-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-menu-item {
+            color: #565D6D;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .header-menu-item.selected {
+            color: var(--primary-color);
+            font-weight: 700;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .profile-icon img {
+            width: 10px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+
+        /* Tutor card styles */
+        .tutor-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tutor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .tutor-image-container {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+            background: #f8f9fa;
+        }
+
+        .tutor-image-container img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            /* border: 3px solid var(--primary-color); */
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .badge.bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+
+        /* Subject banner */
+        #subjectBanner {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Rating stars */
+        .rating-stars .star {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .rating-stars .star.active,
+        .rating-stars .star:hover {
+            color: #ffc107;
+        }
+
+        /* Right image container */
+        .right-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            min-height: 400px;
+        }
+
+        @media (max-width: 767.98px) {
+            .header-menu, .profile-icon {
+                display: none;
+            }
+            
+            .offcanvas-body .header-menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .right-image-container {
+                display: none;
+            }
+            
+            #tutorList {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="header-container">
+        <div class="header-logo">
+            <img src="assets/Untitled.png" alt="TutorConnect">
+        </div>
+
+        <button class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav class="header-menu d-none d-md-flex">
+            <a href="homepage2.html" class="header-menu-item">Home</a>
+            <a href="program.html" class="header-menu-item">Programs</a>
+            <a href="tutor.html" class="header-menu-item selected">Tutors</a>
+            <a href="booking.html" class="header-menu-item">Bookings</a>
+        </nav>
+
+        <div class="profile-icon">
+            <img src="profile-icon.png" alt="Profile">
+        </div>
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <nav class="header-menu d-flex flex-column">
+                    <a href="homepage2.html" class="header-menu-item">Home</a>
+                    <a href="program.html" class="header-menu-item">Programs</a>
+                    <a href="tutor.html" class="header-menu-item selected">Tutors</a>
+                    <a href="booking.html" class="header-menu-item">Bookings</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="text-center my-4">Tutors</h1>
+
+        <div class="text-center mb-4">
+            <div id="subjectBanner" class="badge p-2 fs-6 d-none">
+                Showing tutors for: <span id="selectedSubject"></span>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-6">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search for tutors...">
+            </div>
+            <div class="col-md-6 d-flex">
+                <select id="locationFilter" class="form-select me-2">
+                    <option value="">All Locations</option>
+                </select>
+                <select id="sortCourses" class="form-select">
+                    <option value="">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name-asc">Name: A-Z</option>
+                    <option value="name-desc">Name: Z-A</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div id="tutorList" class="col-lg-8">
+                <!-- Tutor cards will be generated dynamically here -->
+            </div>
+            <div class="col-lg-4 d-none d-lg-flex align-items-center justify-content-center">
+                <img src="assets/Image 86.png" alt="Right Side Image" class="img-fluid right-image-container">
+            </div>
+        </div>
+    </main>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Book a Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="locationSelect" class="form-label">Location</label>
+                            <select id="locationSelect" class="form-select">
+                                <option value="Kotei">Kotei</option>
+                                <option value="New Site">New Site</option>
+                                <option value="Bomso">Bomso</option>
+                                <option value="Engineering Gate">Engineering Gate</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startTime" class="form-label">Start Time</label>
+                            <input type="time" id="startTime" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endTime" class="form-label">End Time</label>
+                            <input type="time" id="endTime" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="confirmBooking" class="btn btn-primary">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorNameForReview">Review for Tutor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Rating</label>
+                            <div class="rating-stars">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" id="ratingValue" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="recommendationSlider" class="form-label">Recommendation</label>
+                            <input type="range" class="form-range" id="recommendationSlider" min="0" max="10" value="5">
+                            <div class="d-flex justify-content-between">
+                                <small>Not Likely</small>
+                                <small>Neutral</small>
+                                <small>Very Likely</small>
+                            </div>
+                            <p class="text-center mt-2">Score: <span id="sliderValue">5</span></p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Review</label>
+                            <textarea id="reviewText" class="form-control" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="submitReview" class="btn btn-primary">Submit Review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/tutor.js"></script>
+    <footer></footer>
+</body>
+</html>
