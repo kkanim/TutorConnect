@@ -3,11 +3,6 @@
 import os
 import sys
 
-<<<<<<< HEAD
-
-=======
- 
->>>>>>> 36d33f2 (Updated models.py: Added rating validation and improved average rating calculation)
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'TutorsConnect_v1.settings')

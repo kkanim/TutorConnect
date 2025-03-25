@@ -21,11 +21,10 @@ class SignUpSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         account_type = validated_data.pop("account_type")  # Extract the account type
 
-        # Assign account-specific properties (if needed)
-        if account_type == "student":
-            user = User.create_user(**validated_data)
-        else:
-            user = User.create_tutor(**validated_data)
+        is_tutor = False if account_type == 'student' else True
+        validated_data['is_tutor'] = is_tutor
+
+        user = User.create_user(**validated_data)
 
         return user
 

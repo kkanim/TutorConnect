@@ -5,11 +5,11 @@ class TutorForm(forms.ModelForm):
     class Meta:
 
         model = Tutor
-        fields = ['name', 'bio', 'subjects', 'availability']
+        fields = ['bio', 'subjects']
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:
 
         model = Review
-        field = ['tutor', 'student_name', 'rating', 'comment']
-  
+        fields = ['tutor', 'student_name', 'rating', 'comment']

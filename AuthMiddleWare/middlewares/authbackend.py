@@ -12,10 +12,6 @@ class EmailOrUsernameAuthBackend(ModelBackend):
         """
         Overrides the default authenticate method to check for both email and username.
         """
-
-        print("HOHOHO")
-        print(username_email, password)
-
         user = User.get_user_by_email(email=username_email) if "@" in username_email else User.get_user_by_username(username=username_email)
 
         # Check password

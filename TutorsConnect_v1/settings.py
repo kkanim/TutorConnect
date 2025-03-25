@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AuthMiddleWare',
     'Account',
+]
 
 
 # 'django.middleware.csrf.CsrfViewMiddleware',
@@ -142,6 +143,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom user model
 AUTH_USER_MODEL = "Account.CustomUser"
 
+# Login URL
+LOGIN_URL = '/api/v1/accounts/login/'
 
 SESSION_COOKIE_SECURE = True  # Ensures session cookies are sent over HTTPS
 SESSION_COOKIE_HTTPONLY = True  # Prevents JavaScript access
